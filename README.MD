@@ -15,4 +15,4 @@ Buzz Buddy is a price comparison tool that helps users locate the best prices on
 
 ## Contact
  Questions? Reach out to us at buzzbuddy@gmail.com
- 
+This is so cool! I can't wait to see the final product.
