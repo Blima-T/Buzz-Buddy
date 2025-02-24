@@ -114,25 +114,26 @@
 </div>
 
 <div class="form-group">
-    <img id="pouch-image" src="https://www.medicgems.com/all-about-zyn-nicotine-pouches/" 
+    <img id="pouch-image" src="https://upload.wikimedia.org/wikipedia/commons/4/44/Zyn_nicotine_pouches.jpg" 
          alt="Pouch Image" width="150">
 </div>
 
 <script>
     function updatePouchImage() {
         const pouchImages = {
-            "zyn": "https://www.medicgems.com/all-about-zyn-nicotine-pouches/",
-            "on": "https://vapeshire.com/product/353-4401-on-nicotine-pouches-8mg-citrus/",
-            "velo": "https://www.whitepouches.com/ae/velo-cinnamon-flame-strong",
-            "rogue": "https://www.roguenicotine.com/rogue-pouches-5-pack/?sku=RO-5PK-PO-HL-6",
-            "lucy": "https://nicokick.com/us/lucy-wintergreen-12mg-slim-nicotine-pouches",
-            "fre": "https://vapertec.com/fre-nicotine-pouches/"
+            "zyn": "https://upload.wikimedia.org/wikipedia/commons/4/44/Zyn_nicotine_pouches.jpg",
+            "on": "https://cdn.shopify.com/s/files/1/0272/7123/9916/products/on-3mg-wintergreen.jpg",
+            "velo": "https://www.haypp.com/dw/image/v2/BDPZ_PRD/on/demandware.static/-/Sites-haypp-master-catalog/default/dw026cd471/images/hi-res/large_VELO_Ruby_Berry_X-Strong.png",
+            "rogue": "https://roguepouches.com/cdn/shop/products/rogue-nicotine-pouches-honey-lemon-6mg-5-pack-33668302139437_600x.png",
+            "lucy": "https://cdn11.bigcommerce.com/s-hfip0y/images/stencil/1280x1280/products/396/2267/Lucy-Nicotine-Pouches-Wintergreen-12mg_540x@2x.jpg",
+            "fre": "https://www.freshcope.com/sites/g/files/fnmzdf346/files/migrate-product-files/fre_nicotine_pouches.png"
         };
 
         const selectedPouch = document.getElementById("pouch-type").value;
         document.getElementById("pouch-image").src = pouchImages[selectedPouch];
     }
 </script>
+
 
         <div class="form-group">
             <label for="price">Price:</label>
