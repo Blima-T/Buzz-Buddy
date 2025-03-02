@@ -85,7 +85,7 @@
     <div class="form-container">
         <div class="form-group">
             <label for="zip-code">Enter ZIP Code:</label>
-            <input type="text" id="zip-code" placeholder="e.g. 90210">
+            <input type="text" id="zip-code" placeholder="e.g. 90210" required>
         </div>
 
         <div class="form-group">
@@ -105,32 +105,29 @@
         </div>
 
         <div class="form-group">
-    <label for="pouch-type">Type of Pouch:</label>
-    <select id="pouch-type" onchange="updatePouchImage()">
-        <option value="zyn">Zyn</option>
-        <option value="on">On!</option>
-        <option value="velo">Velo</option>
-        <option value="rogue">Rogue</option>
-        <option value="lucy">Lucy</option>
-        <option value="fre">Fre</option>
-    </select>
-</div>
+            <label for="pouch-type">Type of Pouch:</label>
+            <select id="pouch-type" onchange="updatePouchImage()">
+                <option value="zyn">Zyn</option>
+                <option value="on">On!</option>
+                <option value="velo">Velo</option>
+                <option value="rogue">Rogue</option>
+                <option value="lucy">Lucy</option>
+                <option value="fre">Fre</option>
+            </select>
+        </div>
 
-<div class="form-group">
-    <img id="pouch-image" src="images/zyn.png" alt="Pouch Image" width="150">
-</div>
+        <div class="form-group">
+            <img id="pouch-image" src="images/zyn.png" alt="Pouch Image" width="150">
+        </div>
 
-<script>
-    function updatePouchImage() {
-        let selectedPouch = document.getElementById("pouch-type").value;
-        let pouchImage = document.getElementById("pouch-image");
-        
-        // Update the image source
-        pouchImage.src = `images/${selectedPouch}.png`;
-        pouchImage.alt = `${selectedPouch} Pouch`;
-    }
-</script>
-
+        <script>
+            function updatePouchImage() {
+                let selectedPouch = document.getElementById("pouch-type").value;
+                let pouchImage = document.getElementById("pouch-image");
+                pouchImage.src = `images/${selectedPouch}.png`;
+                pouchImage.alt = `${selectedPouch} Pouch`;
+            }
+        </script>
 
         <div class="form-group">
             <label for="price">Price:</label>
@@ -163,6 +160,7 @@
 
         <button class="submit-button">Submit</button>
     </div>
+
     <script>
         document.querySelector(".submit-button").addEventListener("click", function () {
             const zipCode = document.getElementById("zip-code").value;
@@ -170,7 +168,13 @@
             const pouchType = document.getElementById("pouch-type").value;
             const price = document.getElementById("price").value;
             const rewards = document.getElementById("rewards").value;
-    
+
+            // Ensure all fields are filled
+            if (!zipCode || !gasStation || !pouchType || !price || !rewards) {
+                alert("Please fill out all fields.");
+                return;
+            }
+
             const formData = {
                 zip_code: zipCode,
                 gas_station: gasStation,
@@ -178,8 +182,8 @@
                 price: price,
                 rewards: rewards
             };
-    
-            fetch("http://localhost:3000/submit", {
+
+            fetch("https://buzz-buddy-h6hf.onrender.com/submit", { // Updated URL
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -199,5 +203,6 @@
 
 </body>
 </html>
+
 
 
