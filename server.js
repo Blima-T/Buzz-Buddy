@@ -15,14 +15,16 @@ app.get("/", (req, res) => {
     const sql = "SELECT * FROM responses";
     db.all(sql, [], (err, rows) => {
         if (err) {
-            return res.status(500).json({ error: err.message });
+            return res.status(500).send(`<h1>Error: ${err.message}</h1>`);
         }
-        res.json({
-            message: "Welcome to Buzz Buddy Backend!",
-            data: rows
-        });
+
+        let html = `<h1>Welcome to Buzz Buddy Backend!</h1>`;
+        html += `<pre>${JSON.stringify(rows, null, 2)}</pre>`; // Display data below
+
+        res.send(html);
     });
 });
+
 
 
 // Handle form submission
