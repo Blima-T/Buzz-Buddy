@@ -17,14 +17,13 @@ app.get("/", (req, res) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
-        
-        // Create a response object with both the message and stored data
         res.json({
             message: "Welcome to Buzz Buddy Backend!",
             data: rows
         });
     });
 });
+
 
 // Handle form submission
 app.post("/submit", (req, res) => {
