@@ -163,6 +163,40 @@
 
         <button class="submit-button">Submit</button>
     </div>
+    <script>
+        document.querySelector(".submit-button").addEventListener("click", function () {
+            const zipCode = document.getElementById("zip-code").value;
+            const gasStation = document.getElementById("gas-stations").value;
+            const pouchType = document.getElementById("pouch-type").value;
+            const price = document.getElementById("price").value;
+            const rewards = document.getElementById("rewards").value;
+    
+            const formData = {
+                zip_code: zipCode,
+                gas_station: gasStation,
+                pouch_type: pouchType,
+                price: price,
+                rewards: rewards
+            };
+    
+            fetch("http://localhost:3000/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message); // Show success message
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error submitting form. Please try again.");
+            });
+        });
+    </script>
+
 </body>
 </html>
 
