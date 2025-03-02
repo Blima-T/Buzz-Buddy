@@ -9,9 +9,21 @@ const PORT = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Test Route (to check if server is running)
+// Show all stored data on the main page
+// Show welcome message and stored data on the main page
 app.get("/", (req, res) => {
-    res.send("Welcome to Buzz Buddy Backend!");
+    const sql = "SELECT * FROM responses";
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        
+        // Create a response object with both the message and stored data
+        res.json({
+            message: "Welcome to Buzz Buddy Backend!",
+            data: rows
+        });
+    });
 });
 
 // Handle form submission
@@ -29,20 +41,11 @@ app.post("/submit", (req, res) => {
     });
 });
 
-// ✅ NEW: Route to fetch all stored data
-app.get("/data", (req, res) => {
-    const sql = `SELECT * FROM responses`;
-    db.all(sql, [], (err, rows) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        res.json(rows);
-    });
-});
-
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
+
+
 
 
