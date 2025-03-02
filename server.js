@@ -29,8 +29,20 @@ app.post("/submit", (req, res) => {
     });
 });
 
+// ✅ NEW: Route to fetch all stored data
+app.get("/data", (req, res) => {
+    const sql = `SELECT * FROM responses`;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows);
+    });
+});
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
+
 
