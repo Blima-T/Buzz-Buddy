@@ -83,7 +83,7 @@
             font-size: 16px;
             font-weight: bold;
             border-radius: 5px;
-            display: none; /* Hidden by default */
+            display: none;
         }
 
         .success {
@@ -112,6 +112,7 @@
         <div class="form-group">
             <label for="gas-stations">Select a Gas Station:</label>
             <select id="gas-stations">
+                <option value="" selected disabled>Select an option...</option>
                 <option value="shell">Shell</option>
                 <option value="bp">BP</option>
                 <option value="exxon">Exxon</option>
@@ -128,6 +129,7 @@
         <div class="form-group">
             <label for="pouch-type">Type of Pouch:</label>
             <select id="pouch-type" onchange="updatePouchImage()">
+                <option value="" selected disabled>Select an option...</option>
                 <option value="zyn">Zyn</option>
                 <option value="on">On!</option>
                 <option value="velo">Velo</option>
@@ -138,21 +140,28 @@
         </div>
 
         <div class="form-group">
-            <img id="pouch-image" src="images/zyn.png" alt="Pouch Image" width="150">
+            <img id="pouch-image" src="images/default.png" alt="Pouch Image" width="150">
         </div>
 
         <script>
             function updatePouchImage() {
                 let selectedPouch = document.getElementById("pouch-type").value;
                 let pouchImage = document.getElementById("pouch-image");
-                pouchImage.src = `images/${selectedPouch}.png`;
-                pouchImage.alt = `${selectedPouch} Pouch`;
+
+                if (selectedPouch) {
+                    pouchImage.src = `images/${selectedPouch}.png`;
+                    pouchImage.alt = `${selectedPouch} Pouch`;
+                } else {
+                    pouchImage.src = "images/default.png";
+                    pouchImage.alt = "Pouch Image";
+                }
             }
         </script>
 
         <div class="form-group">
             <label for="price">Price:</label>
             <select id="price">
+                <option value="" selected disabled>Select an option...</option>
                 <option value="1">$1</option>
                 <option value="2">$2</option>
                 <option value="3">$3</option>
@@ -174,6 +183,7 @@
         <div class="form-group">
             <label for="rewards">Rewards Member Needed?</label>
             <select id="rewards">
+                <option value="" selected disabled>Select an option...</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
             </select>
@@ -194,7 +204,6 @@
             const rewards = document.getElementById("rewards").value;
             const messageBox = document.getElementById("message-box");
 
-            // Ensure all fields are filled
             if (!zipCode || !gasStation || !pouchType || !price || !rewards) {
                 messageBox.innerText = "❌ Please fill out all fields.";
                 messageBox.className = "message-box error";
@@ -202,29 +211,23 @@
                 return;
             }
 
-            const formData = {
-                zip_code: zipCode,
-                gas_station: gasStation,
-                pouch_type: pouchType,
-                price: price,
-                rewards: rewards
-            };
+            const formData = { zip_code: zipCode, gas_station: gasStation, pouch_type: pouchType, price: price, rewards: rewards };
 
             fetch("https://buzz-buddy-h6hf.onrender.com/submit", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             })
-            .then(response => response.json())
-            .then(data => {
+            .then(() => {
                 messageBox.innerText = "✅ Submission successful!";
                 messageBox.className = "message-box success";
                 messageBox.style.display = "block";
+
+                document.querySelector("form").reset();
+                document.getElementById("pouch-image").src = "images/default.png";
             })
-            .catch(error => {
-                messageBox.innerText = "❌ Error submitting form. Please try again.";
+            .catch(() => {
+                messageBox.innerText = "❌ Error submitting form.";
                 messageBox.className = "message-box error";
                 messageBox.style.display = "block";
             });
@@ -233,6 +236,7 @@
 
 </body>
 </html>
+
 
 
 
