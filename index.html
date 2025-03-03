@@ -214,28 +214,33 @@
             const formData = { zip_code: zipCode, gas_station: gasStation, pouch_type: pouchType, price: price, rewards: rewards };
 
             fetch("https://buzz-buddy-h6hf.onrender.com/submit", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData)
-            })
-            .then(() => {
-                messageBox.innerText = "✅ Submission successful!";
-                messageBox.className = "message-box success";
-                messageBox.style.display = "block";
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        zip_code: "90210",
+        gas_station: "shell",
+        pouch_type: "zyn",
+        price: "5",
+        rewards: "no"
+    })
+})
+.then(response => response.json().then(data => ({ status: response.status, body: data })))
+.then(({ status, body }) => {
+    console.log("Response Status:", status);
+    console.log("Response Body:", body);
 
-                document.querySelector("form").reset();
-                document.getElementById("pouch-image").src = "images/default.png";
-            })
-            .catch(() => {
-                messageBox.innerText = "❌ Error submitting form.";
-                messageBox.className = "message-box error";
-                messageBox.style.display = "block";
-            });
-        });
-    </script>
+    if (status === 200) {
+        alert(body.message); // Success message
+    } else {
+        alert("Error: " + body.error); // Show error details
+    }
+})
+.catch(error => {
+    console.error("Fetch Error:", error);
+    alert("Error submitting form. Please try again.");
+});
 
-</body>
-</html>
+            
 
 
 
