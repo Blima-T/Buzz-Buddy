@@ -74,6 +74,27 @@
         .submit-button:hover {
             background-color: #2980b9;
         }
+
+        /* Style for the success/error message */
+        .message-box {
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            display: none; /* Hidden by default */
+        }
+
+        .success {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .error {
+            background-color: #e74c3c;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -159,6 +180,9 @@
         </div>
 
         <button class="submit-button">Submit</button>
+
+        <!-- Message Box for Success/Error -->
+        <div id="message-box" class="message-box"></div>
     </div>
 
     <script>
@@ -168,10 +192,13 @@
             const pouchType = document.getElementById("pouch-type").value;
             const price = document.getElementById("price").value;
             const rewards = document.getElementById("rewards").value;
+            const messageBox = document.getElementById("message-box");
 
             // Ensure all fields are filled
             if (!zipCode || !gasStation || !pouchType || !price || !rewards) {
-                alert("Please fill out all fields.");
+                messageBox.innerText = "❌ Please fill out all fields.";
+                messageBox.className = "message-box error";
+                messageBox.style.display = "block";
                 return;
             }
 
@@ -192,19 +219,21 @@
             })
             .then(response => response.json())
             .then(data => {
-                setTimeout(() => {
-                    window.confirm("✅ Submission successful!");
-                }, 100);
+                messageBox.innerText = "✅ Submission successful!";
+                messageBox.className = "message-box success";
+                messageBox.style.display = "block";
             })
             .catch(error => {
-                console.error("Error:", error);
-                alert("Error submitting form. Please try again.");
+                messageBox.innerText = "❌ Error submitting form. Please try again.";
+                messageBox.className = "message-box error";
+                messageBox.style.display = "block";
             });
         });
     </script>
 
 </body>
 </html>
+
 
 
 
