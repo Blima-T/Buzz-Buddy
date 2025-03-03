@@ -183,7 +183,7 @@
                 rewards: rewards
             };
 
-            fetch("https://buzz-buddy-h6hf.onrender.com/submit", { // Updated URL
+            fetch("https://buzz-buddy-h6hf.onrender.com/submit", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -192,17 +192,25 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert(data.message); // Show success message
+                alert("✅ Submission successful!"); // Success message
+
+                // Clear form fields after submission
+                document.getElementById("zip-code").value = "";
+                document.getElementById("gas-stations").value = "shell";
+                document.getElementById("pouch-type").value = "zyn";
+                document.getElementById("price").value = "1";
+                document.getElementById("rewards").value = "yes";
             })
             .catch(error => {
                 console.error("Error:", error);
-                alert("Error submitting form. Please try again.");
+                alert("❌ Error submitting form. Please try again.");
             });
         });
     </script>
 
 </body>
 </html>
+
 
 
 
