@@ -192,18 +192,13 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert("✅ Submission successful!"); // Success message
-
-                // Clear form fields after submission
-                document.getElementById("zip-code").value = "";
-                document.getElementById("gas-stations").value = "shell";
-                document.getElementById("pouch-type").value = "zyn";
-                document.getElementById("price").value = "1";
-                document.getElementById("rewards").value = "yes";
+                setTimeout(() => {
+                    window.confirm("✅ Submission successful!");
+                }, 100);
             })
             .catch(error => {
                 console.error("Error:", error);
-                alert("❌ Error submitting form. Please try again.");
+                alert("Error submitting form. Please try again.");
             });
         });
     </script>
