@@ -1,14 +1,21 @@
 const sqlite3 = require("sqlite3").verbose();
+const fs = require("fs");
 const path = require("path");
 
-// Determine database path
+// Ensure /data directory exists (needed for Render)
 const dbPath = process.env.RENDER ? "/data/buzzbuddy.db" : path.join(__dirname, "buzzbuddy.db");
+
+if (process.env.RENDER) {
+    if (!fs.existsSync("/data")) {
+        fs.mkdirSync("/data"); // ✅ Create directory if it doesn't exist
+    }
+}
 
 const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
         console.error("Error opening database:", err.message);
     } else {
-        console.log("Connected to SQLite database at:", dbPath); // ✅ Log the database path
+        console.log("Connected to SQLite database at:", dbPath);
     }
 });
 
@@ -32,5 +39,3 @@ db.run(
 );
 
 module.exports = db;
-
-
