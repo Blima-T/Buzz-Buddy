@@ -205,63 +205,53 @@
             const messageBox = document.getElementById("message-box");
 
             if (!zipCode || !gasStation || !pouchType || !price || !rewards) {
-                messageBox.innerText = "❌ Please fill out all fields.";
-                messageBox.className = "message-box error";
-                messageBox.style.display = "block";
-                return;
-            }
-
-            const formData = { zip_code: zipCode, gas_station: gasStation, pouch_type: pouchType, price: price, rewards: rewards };
-
-            document.querySelector(".submit-button").addEventListener("click", function () {
-    const zipCode = document.getElementById("zip-code").value;
-    const gasStation = document.getElementById("gas-stations").value;
-    const pouchType = document.getElementById("pouch-type").value;
-    const price = document.getElementById("price").value;
-    const rewards = document.getElementById("rewards").value;
-    const messageBox = document.getElementById("message-box");
-
-    if (!zipCode || !gasStation || !pouchType || !price || !rewards) {
-        messageBox.innerText = "❌ Please fill out all fields.";
-        messageBox.className = "message-box error";
-        messageBox.style.display = "block";
-        return;
-    }
-
-    const formData = { zip_code: zipCode, gas_station: gasStation, pouch_type: pouchType, price: price, rewards: rewards };
-
-    fetch("https://buzz-buddy-h6hf.onrender.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-    })
-    .then(response => response.json().then(data => ({ status: response.status, body: data })))
-    .then(({ status, body }) => {
-        if (status === 200) {
-            messageBox.innerText = "✅ Submission successful!";
-            messageBox.className = "message-box success";
-            messageBox.style.display = "block";
-
-            // Reset form inputs
-            document.getElementById("zip-code").value = "";
-            document.getElementById("gas-stations").selectedIndex = 0;
-            document.getElementById("pouch-type").selectedIndex = 0;
-            document.getElementById("price").selectedIndex = 0;
-            document.getElementById("rewards").selectedIndex = 0;
-            document.getElementById("pouch-image").src = "images/default.png";
-        } else {
-            messageBox.innerText = "❌ Error: " + (body.error || "Something went wrong.");
+            messageBox.innerText = "❌ Please fill out all fields.";
             messageBox.className = "message-box error";
             messageBox.style.display = "block";
+            return;
         }
-    })
-    .catch(error => {
-        console.error("Fetch Error:", error);
-        messageBox.innerText = "❌ Error submitting form.";
-        messageBox.className = "message-box error";
-        messageBox.style.display = "block";
+
+        const formData = {
+            zip_code: zipCode,
+            gas_station: gasStation,
+            pouch_type: pouchType,
+            price: price,
+            rewards: rewards
+        };
+
+        fetch("https://buzz-buddy-h6hf.onrender.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+        .then(({ status, body }) => {
+            if (status === 200) {
+                messageBox.innerText = "✅ Submission successful!";
+                messageBox.className = "message-box success";
+                messageBox.style.display = "block";
+
+                // Reset form inputs
+                document.getElementById("zip-code").value = "";
+                document.getElementById("gas-stations").selectedIndex = 0;
+                document.getElementById("pouch-type").selectedIndex = 0;
+                document.getElementById("price").selectedIndex = 0;
+                document.getElementById("rewards").selectedIndex = 0;
+                document.getElementById("pouch-image").src = "images/default.png";
+            } else {
+                messageBox.innerText = "❌ Error: " + (body.error || "Something went wrong.");
+                messageBox.className = "message-box error";
+                messageBox.style.display = "block";
+            }
+        })
+        .catch(error => {
+            console.error("Fetch Error:", error);
+            messageBox.innerText = "❌ Error submitting form.";
+            messageBox.className = "message-box error";
+            messageBox.style.display = "block";
+        });
     });
-});
+</script>
 
 
             
