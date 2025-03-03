@@ -4,7 +4,8 @@ const bodyParser = require("body-parser");
 const db = require("./database"); // Import database
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // ✅ Uses Render's assigned port
+
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -30,6 +31,8 @@ app.get("/", (req, res) => {
 // Handle form submission
 app.post("/submit", (req, res) => {
     const { zip_code, gas_station, pouch_type, price, rewards } = req.body;
+
+    console.log("Received data:", req.body);  // 🛠 Log the incoming data
 
     const sql = `INSERT INTO responses (zip_code, gas_station, pouch_type, price, rewards) VALUES (?, ?, ?, ?, ?)`;
     const values = [zip_code, gas_station, pouch_type, price, rewards];
