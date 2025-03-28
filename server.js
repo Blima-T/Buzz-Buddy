@@ -11,21 +11,7 @@ app.use(bodyParser.json());
 
 // Show all stored data on the main page
 app.get("/", (req, res) => {
-    const sql = "SELECT * FROM responses";
-    
-    db.all(sql, [], (err, rows) => {
-        if (err) {
-            console.error("Error fetching data:", err.message);
-            return res.status(500).send(`<h1>Error: ${err.message}</h1>`);
-        }
-
-        console.log("Data retrieved from DB:", rows); // ✅ Logs actual DB data
-
-        let html = `<h1>Welcome to Buzz Buddy Backend!</h1>`;
-        html += `<pre>${JSON.stringify(rows, null, 2)}</pre>`; // Display data
-
-        res.send(html);
-    });
+    res.send("<h1>Buzz Buddy Backend Running</h1>");
 });
 
 // Handle form submission
